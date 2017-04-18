@@ -9,7 +9,7 @@ public class Customer implements Runnable {
 	@Override
 	public void run() {
 		System.out.println("Customer " + Thread.currentThread().getId() + " pulls up to sonic. " );
-		System.out.println("Customer " + Thread.currentThread().getId() + " is looking for a parking spot.");
+		//System.out.println("Customer " + Thread.currentThread().getId() + " is looking for a parking spot.");
 		space.takeParkingSpace();
 		System.out.println("Customer " + Thread.currentThread().getId() + " found a parking space.");
 		employee.takeOrder();

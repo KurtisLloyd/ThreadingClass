@@ -1,12 +1,12 @@
 import java.util.concurrent.Semaphore;
 
 public class Employee {
-	
+
 	private static int NUM_OF_EMPLOYEES =5;
-	private static boolean PaymentSystem = false;
-	
+	private PaymentSystem paymentSystem = new PaymentSystem();
+
 	private static Semaphore locker = new Semaphore(NUM_OF_EMPLOYEES);
-	
+
 	public void takeOrder(){
 		try {
 			System.out.println(" Customer " + Thread.currentThread().getId() + " is Ordering.");
@@ -17,22 +17,26 @@ public class Employee {
 		}
 	}
 	public void processCustOrder(){
-		if(PaymentSystem == false){
+		synchronized(paymentSystem){
 			try {
+				System.out.println("Thread : " +Thread.currentThread().getId() + "uses the PaymentSystem ");
 				Thread.sleep(1000);
 				System.out.println("Processing Order for customer " + Thread.currentThread().getId());
-				PaymentSystem = true;
+				paymentSystem.setPaymentSystem(false);
+				System.out.println("Thread : " +Thread.currentThread().getId() + "drops the PaymentSystem ");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
+
+			System.out.println("Order for cutomer " + Thread.currentThread().getId() + " has finished Processing");
+
+			locker.release();
 		}
-		PaymentSystem = false;
-		System.out.println("Order for cutomer " + Thread.currentThread().getId() + " has finished Processing");
-		locker.release();	
 	}
+
+
 	public void deliverFood(){
 		try {
 			locker.acquire();
