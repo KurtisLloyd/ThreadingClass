@@ -8,7 +8,6 @@ public class Customer implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Customer " + Thread.currentThread().getId() + " pulls up to sonic. " );
 		System.out.println("Customer " + Thread.currentThread().getId() + " is looking for a parking spot.");
 		space.takeParkingSpace();
 		System.out.println("Customer " + Thread.currentThread().getId() + " found a parking space.");
@@ -24,8 +23,7 @@ public class Customer implements Runnable {
 		
 		
 	}
-	
-	
+
 	public void eatFood(){
 		try {
 			Thread.sleep(gen.nextInt(3000)+ 2000);
